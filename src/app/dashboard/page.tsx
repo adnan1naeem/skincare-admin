@@ -50,7 +50,7 @@ export default function Page(): React.JSX.Element {
 
   return (
     <div style={{ height: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-      <Grid container spacing={1} style={{ width: '80%' }}>
+      <Grid container spacing={1} style={{ width: '100%' }}>
         <Grid item xs={12}>
         <ErrorAlert isError={isError} errorMessages={errorMessages?"Delete failed! Server error":""} />
           <AddProductButton onClick={handleAddProductClick} />
