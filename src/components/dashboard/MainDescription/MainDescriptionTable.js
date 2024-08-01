@@ -35,7 +35,7 @@ export const MainDescriptionTable = ({ data, refreshData }) => {
           title: "Description",
           field: "description",
           render: rowData => (
-            <div style={{ maxHeight: 100, overflow: 'auto',width:300 }}>{rowData.description}</div>
+            <div style={{ maxHeight: 100, overflow: 'auto', width: 300 }}>{rowData.description}</div>
           ),
           editComponent: props => (
             <Input
@@ -47,6 +47,10 @@ export const MainDescriptionTable = ({ data, refreshData }) => {
           ),
         },
       ]}
+      options={{
+        pageSize: 27,
+        pageSizeOptions: [30, 40, 60],
+      }}
       data={data}
       icons={tableIcons}
       editable={{
