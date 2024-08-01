@@ -1,15 +1,13 @@
-// Replace AsyncStorage with localStorage or sessionStorage
-// const getToken = () => localStorage.getItem('token');
+const getBaseUrl = () => 'http://152.42.225.202'; // Replace with your actual base URL
 
 let token;
 if (typeof window !== 'undefined') {
   token = localStorage.getItem('custom-auth-token');
-  
 }
 
 export const postRequest = async (endpoint, body) => {
   try {
-    const response = await fetch(`https://152.42.225.202/${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -33,7 +31,7 @@ export const postRequest = async (endpoint, body) => {
 
 export const getRequest = async (endpoint) => {
   try {
-    const response = await fetch(`https://152.42.225.202/${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -55,7 +53,7 @@ export const getRequest = async (endpoint) => {
 
 export const putRequest = async (endpoint, body) => {
   try {
-    const response = await fetch(`https://152.42.225.202/${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -78,7 +76,7 @@ export const putRequest = async (endpoint, body) => {
 
 export const postRequestToken = async (endpoint, body) => {
   try {
-    const response = await fetch(`https://152.42.225.202/${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -99,9 +97,10 @@ export const postRequestToken = async (endpoint, body) => {
     throw new Error(error);
   }
 };
+
 export const deleteRequestToken = async (endpoint) => {
   try {
-    const response = await fetch(`https://152.42.225.202/${endpoint}`, {
+    const response = await fetch(`${getBaseUrl()}/${endpoint}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
