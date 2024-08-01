@@ -4,7 +4,7 @@ import { postRequestToken } from '../components/ApiHandler'; // Adjust the impor
 
 const enumValues = ["Hydration", "Oilness", "Elasticity", "SkinAge"];
 
-export default function ProductForm({ open, onClose, onSave, product }) {
+export default function ProductForm({ open, onClose, onSave, product,setProduct }) {
     const [productData, setProductData] = useState({
         ...product,
         availableAmount: product?.availableAmount || 1, // Default to 1 if not provided

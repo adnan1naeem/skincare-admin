@@ -1,7 +1,10 @@
 // Replace AsyncStorage with localStorage or sessionStorage
 // const getToken = () => localStorage.getItem('token');
 
-const token = localStorage.getItem('custom-auth-token');
+let token;
+if (typeof window !== 'undefined') {
+  token = localStorage.getItem('custom-auth-token');
+}
 
 export const postRequest = async (endpoint, body) => {
   try {

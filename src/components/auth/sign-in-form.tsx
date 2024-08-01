@@ -32,7 +32,7 @@ const defaultValues = { email: '', password: '' } satisfies Values;
 
 export function SignInForm(): React.JSX.Element {
   const router = useRouter();
-  const { checkSession } = useUser();
+  const { checkSession }:any = useUser();
   const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const [isPending, setIsPending] = React.useState<boolean>(false);
 
@@ -56,7 +56,7 @@ export function SignInForm(): React.JSX.Element {
         } else {
           throw new Error('Login failed. Please try again.');
         }
-      } catch (error) {
+      } catch (error:any) {
         setError('root', { message: error.message });
       } finally {
         setIsPending(false);

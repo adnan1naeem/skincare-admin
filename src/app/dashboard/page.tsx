@@ -8,7 +8,7 @@ import {AddProductButton} from './../../components/dashboard/overview/ProductBut
 import {ProductTable} from './../../components/dashboard/overview/ProductTable';
 import { deleteRequestToken, getRequest } from '@/components/ApiHandler';
 export default function Page(): React.JSX.Element {
-  const [data, setData] = useState([]); // table data
+  const [data, setData] = useState<any>([]); // table data
   const [isError, setIsError] = useState(false);
   const [errorMessages, setErrorMessages] = useState(false);
   const [open, setOpen] = useState(false); // State for controlling the form modal
