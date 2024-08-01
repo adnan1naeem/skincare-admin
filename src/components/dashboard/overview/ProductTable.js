@@ -36,7 +36,7 @@ export const ProductTable = ({ data, handleRowDelete }) => {
             <img
               src={rowData
                 ? rowData.productImage.startsWith('uploads/')
-                  ? `http://152.42.225.202/${rowData.productImage}`
+                  ? `https://152.42.225.202/${rowData.productImage}`
                   : rowData.productImage
                 : " "
               }
