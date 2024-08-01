@@ -24,15 +24,20 @@ export default function ProductForm({ open, onClose, onSave, product }) {
         const errors = {};
         if (!productData.title) errors.title = "Title is required";
         if (!productData.description) errors.description = "Description is required";
-        if (!productData.price || productData.price <= 0) errors.price = "Price must be a positive number";
+        if (productData.price == null || productData.price <= 0) errors.price = "Price must be a positive number";
+        if (productData.discountPrice == null || productData.discountPrice < 0) errors.discountPrice = "Discount price must be a non-negative number";
+        if (!productData.productImage) errors.productImage = "Product Image URL is required";
         if (!productData.amazonUrl) errors.amazonUrl = "Amazon URL is required";
         if (!productData.hydration) errors.hydration = "Hydration is required";
         if (!productData.oil) errors.oil = "Oilness is required";
         if (!productData.elasticity) errors.elasticity = "Elasticity is required";
+        if (!selectedEnums.length) errors.featureImages = "At least one feature image must be selected";
+        if (!productData.detail) errors.detail = "Detail is required";
         setErrors(errors);
-
+    
         return Object.keys(errors).length === 0;
     };
+    
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -102,6 +107,8 @@ export default function ProductForm({ open, onClose, onSave, product }) {
                     type="number"
                     value={productData?.discountPrice || ''}
                     onChange={handleInputChange}
+                    error={!!errors.discountPrice}
+                    helperText={errors.discountPrice}
                 />
                 <TextField
                     margin="dense"
@@ -110,6 +117,8 @@ export default function ProductForm({ open, onClose, onSave, product }) {
                     name="productImage"
                     value={productData?.productImage || ''}
                     onChange={handleInputChange}
+                    error={!!errors.productImage}
+                    helperText={errors.productImage}
                 />
                 <TextField
                     margin="dense"
@@ -129,9 +138,10 @@ export default function ProductForm({ open, onClose, onSave, product }) {
                     multiline
                     rows={4}
                     value={productData?.detail || ''}
+                    error={!!errors.detail}
                     onChange={handleInputChange}
                 />
-                <Grid container spacing={2}>
+                <Grid container spacing={2} style={{ marginTop: 20, marginBottom: 20 }}>
                     <Grid item xs={12} sm={4}>
                         <Typography variant="h8">Hydration</Typography>
                         <Select
@@ -143,7 +153,6 @@ export default function ProductForm({ open, onClose, onSave, product }) {
                             onChange={handleInputChange}
                             input={<Input />}
                             error={!!errors.hydration}
-                            helperText={errors.hydration}
                         >
                             {["low", "medium", "high"].map(option => (
                                 <MenuItem key={option} value={option}>{option}</MenuItem>
@@ -161,7 +170,6 @@ export default function ProductForm({ open, onClose, onSave, product }) {
                             onChange={handleInputChange}
                             input={<Input />}
                             error={!!errors.oil}
-                            helperText={errors.oil}
                         >
                             {["low", "medium", "high"].map(option => (
                                 <MenuItem key={option} value={option}>{option}</MenuItem>
@@ -179,7 +187,6 @@ export default function ProductForm({ open, onClose, onSave, product }) {
                             onChange={handleInputChange}
                             input={<Input />}
                             error={!!errors.elasticity}
-                            helperText={errors.elasticity}
                         >
                             {["low", "medium", "high"].map(option => (
                                 <MenuItem key={option} value={option}>{option}</MenuItem>
@@ -203,6 +210,7 @@ export default function ProductForm({ open, onClose, onSave, product }) {
                         </div>
                     )}
                     input={<Input />}
+                    error={!!errors.featureImages}
                 >
                     {enumValues.map(option => (
                         <MenuItem key={option} value={option}>
@@ -210,6 +218,9 @@ export default function ProductForm({ open, onClose, onSave, product }) {
                         </MenuItem>
                     ))}
                 </Select>
+                {errors.featureImages && (
+                    <Typography color="error">{errors.featureImages}</Typography>
+                )}
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} color="primary">

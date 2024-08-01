@@ -25,18 +25,18 @@ export const SkinAnalysisDescriptionTable = ({ data, refreshData }) => {
 
   return (
     <MaterialTable
-      title="Skin Analysis Descriptions"
+      title="My Skin Analysis"
       columns={[
         { title: "ID", field: "_id", hidden: true },
         { title: "Parameter", field: "parameter", editable: 'never' },
         { title: "Level", field: "level", editable: 'never' },
-        { title: "Title", field: "title", editable: 'never' },
         {
-          title: "Description",
+          title: "Sub Title",
           field: "description",
           render: rowData => (
             <div style={{ maxHeight: 100, overflow: 'auto' }}>{rowData.description}</div>
           ),
+          
           editComponent: props => (
             <Input
               value={props.value}
@@ -47,7 +47,7 @@ export const SkinAnalysisDescriptionTable = ({ data, refreshData }) => {
           ),
         },
         {
-          title: "Detail",
+          title: "Description",
           field: "detail",
           render: rowData => (
             <div style={{ maxHeight: 100, overflow: 'auto',width:300 }}>{rowData.detail}</div>
@@ -64,6 +64,10 @@ export const SkinAnalysisDescriptionTable = ({ data, refreshData }) => {
       ]}
       data={data}
       icons={tableIcons}
+      options={{
+        pageSize: 9,
+        pageSizeOptions: [],
+      }}
       editable={{
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {

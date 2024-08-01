@@ -1,6 +1,6 @@
 import React from 'react';
 import MaterialTable from "material-table";
-import { Select, MenuItem, Chip, Input } from '@material-ui/core';
+import { Select, MenuItem, Chip, Input, TextField } from '@material-ui/core';
 import { tableIcons } from './IconsData';
 import './ProductTable.css'; // Import the CSS file for custom styles
 import { putRequest } from '@/components/ApiHandler';
@@ -10,7 +10,7 @@ export const ProductTable = ({ data, handleRowDelete }) => {
 
   const updateProduct = async (updatedData) => {
     try {
-      const response = await putRequest(`api/admin/products/update/${updatedData?._id}`,updatedData);
+      const response = await putRequest(`api/admin/products/update/${updatedData?._id}`, updatedData);
 
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
@@ -28,9 +28,10 @@ export const ProductTable = ({ data, handleRowDelete }) => {
     <MaterialTable
       title="Product List"
       columns={[
-        { title: "id", field: "id", hidden: true },
+        { title: "ID", field: "_id", hidden: true },
         {
           title: "Image",
+          field: "productImage",
           render: rowData => (
             <img
               src={rowData
@@ -42,11 +43,20 @@ export const ProductTable = ({ data, handleRowDelete }) => {
               alt={rowData ? rowData.productImage : "Image"}
               style={{ width: 30, height: 40, borderRadius: '10%' }}
             />
-          )
+          ),
+          editComponent: props => (
+            <TextField
+              style={{width:200}}
+              value={props.value || ''}
+              onChange={e => props.onChange(e.target.value)}
+              label="Image URL"
+              fullWidth
+            />
+          ),
         },
-        { title: "title", field: "title" },
+        { title: "Title", field: "title" },
         {
-          title: "description",
+          title: "Description",
           field: "description",
           render: rowData => (
             <div className="description-cell">
@@ -54,10 +64,10 @@ export const ProductTable = ({ data, handleRowDelete }) => {
             </div>
           ),
         },
-        { title: "price", field: "price" },
-        { title: "discountPrice", field: "discountPrice" },
+        { title: "Price", field: "price" },
+        { title: "Discount Price", field: "discountPrice" },
         {
-          title: "hydration",
+          title: "Hydration",
           field: "hydration",
           editComponent: props => (
             <Select
@@ -72,7 +82,7 @@ export const ProductTable = ({ data, handleRowDelete }) => {
           ),
         },
         {
-          title: "oil",
+          title: "Oil",
           field: "oil",
           editComponent: props => (
             <Select
@@ -87,7 +97,7 @@ export const ProductTable = ({ data, handleRowDelete }) => {
           ),
         },
         {
-          title: "elasticity",
+          title: "Elasticity",
           field: "elasticity",
           editComponent: props => (
             <Select
@@ -102,7 +112,7 @@ export const ProductTable = ({ data, handleRowDelete }) => {
           ),
         },
         {
-          title: "featureImages",
+          title: "Feature Images",
           field: "featureImages",
           render: rowData => (
             <div>
@@ -140,7 +150,7 @@ export const ProductTable = ({ data, handleRowDelete }) => {
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
             updateProduct(newData)
-              .then(updatedProduct => {
+              .then(() => {
                 resolve();
               })
               .catch(error => {

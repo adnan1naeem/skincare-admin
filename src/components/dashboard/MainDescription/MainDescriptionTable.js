@@ -25,7 +25,7 @@ export const MainDescriptionTable = ({ data, refreshData }) => {
 
   return (
     <MaterialTable
-      title="Skin Analysis Descriptions"
+      title="Skin Overview Descriptions"
       columns={[
         { title: "ID", field: "_id", hidden: true },
         { title: "Oilness", field: "oilness", editable: 'never' },
@@ -49,7 +49,7 @@ export const MainDescriptionTable = ({ data, refreshData }) => {
       ]}
       options={{
         pageSize: 27,
-        pageSizeOptions: [30, 40, 60],
+        pageSizeOptions: [],
       }}
       data={data}
       icons={tableIcons}
