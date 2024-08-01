@@ -1,133 +1,72 @@
-import * as React from 'react';
-import type { Metadata } from 'next';
-import Grid from '@mui/material/Unstable_Grid2';
-import dayjs from 'dayjs';
-
-import { config } from '@/config';
-import { Budget } from '@/components/dashboard/overview/budget';
-import { LatestOrders } from '@/components/dashboard/overview/latest-orders';
-import { LatestProducts } from '@/components/dashboard/overview/latest-products';
-import { Sales } from '@/components/dashboard/overview/sales';
-import { TasksProgress } from '@/components/dashboard/overview/tasks-progress';
-import { TotalCustomers } from '@/components/dashboard/overview/total-customers';
-import { TotalProfit } from '@/components/dashboard/overview/total-profit';
-import { Traffic } from '@/components/dashboard/overview/traffic';
-
-export const metadata = { title: `Overview | Dashboard | ${config.site.name}` } satisfies Metadata;
-
+"use client";
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import Grid from '@material-ui/core/Grid';
+import ProductForm from './../../components/ProductForm';
+import {ErrorAlert} from './../../components/dashboard/overview/error-alert'
+import {AddProductButton} from './../../components/dashboard/overview/ProductButton';
+import {ProductTable} from './../../components/dashboard/overview/ProductTable';
+import { deleteRequestToken, getRequest } from '@/components/ApiHandler';
 export default function Page(): React.JSX.Element {
+  const [data, setData] = useState([]); // table data
+  const [isError, setIsError] = useState(false);
+  const [errorMessages, setErrorMessages] = useState(false);
+  const [open, setOpen] = useState(false); // State for controlling the form modal
+  const [product, setProduct] = useState(null); // State to store product data
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await getRequest('api/admin/products/get');
+        setData(response?.products || []);
+      } catch (error) {
+        console.log('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const handleRowDelete = async (oldData?:any, resolve?:any) => {
+      const response = await deleteRequestToken(`api/admin/products/delete/${oldData?._id}`)
+      .then(() => {
+        const dataDelete = [...data];
+        const index = oldData.tableData._id;
+        dataDelete.splice(index, 1);
+        setData([...dataDelete]);
+        resolve();
+      })
+      .catch(() => {
+        setErrorMessages(true);
+        setIsError(true);
+        resolve();
+      });
+  };
+
+  const handleAddProductClick = () => {
+    setProduct(null); // Clear the product state
+    setOpen(true); // Open the form modal
+  };
+
   return (
-    <Grid container spacing={3}>
-      <Grid lg={3} sm={6} xs={12}>
-        <Budget diff={12} trend="up" sx={{ height: '100%' }} value="$24k" />
+    <div style={{ height: '100vh', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <Grid container spacing={1} style={{ width: '80%' }}>
+        <Grid item xs={12}>
+        <ErrorAlert isError={isError} errorMessages={errorMessages?"Delete failed! Server error":""} />
+          <AddProductButton onClick={handleAddProductClick} />
+          <ProductTable data={data} handleRowDelete={handleRowDelete} />
+        </Grid>
       </Grid>
-      <Grid lg={3} sm={6} xs={12}>
-        <TotalCustomers diff={16} trend="down" sx={{ height: '100%' }} value="1.6k" />
-      </Grid>
-      <Grid lg={3} sm={6} xs={12}>
-        <TasksProgress sx={{ height: '100%' }} value={75.5} />
-      </Grid>
-      <Grid lg={3} sm={6} xs={12}>
-        <TotalProfit sx={{ height: '100%' }} value="$15k" />
-      </Grid>
-      <Grid lg={8} xs={12}>
-        <Sales
-          chartSeries={[
-            { name: 'This year', data: [18, 16, 5, 8, 3, 14, 14, 16, 17, 19, 18, 20] },
-            { name: 'Last year', data: [12, 11, 4, 6, 2, 9, 9, 10, 11, 12, 13, 13] },
-          ]}
-          sx={{ height: '100%' }}
-        />
-      </Grid>
-      <Grid lg={4} md={6} xs={12}>
-        <Traffic chartSeries={[63, 15, 22]} labels={['Desktop', 'Tablet', 'Phone']} sx={{ height: '100%' }} />
-      </Grid>
-      <Grid lg={4} md={6} xs={12}>
-        <LatestProducts
-          products={[
-            {
-              id: 'PRD-005',
-              name: 'Soja & Co. Eucalyptus',
-              image: '/assets/product-5.png',
-              updatedAt: dayjs().subtract(18, 'minutes').subtract(5, 'hour').toDate(),
-            },
-            {
-              id: 'PRD-004',
-              name: 'Necessaire Body Lotion',
-              image: '/assets/product-4.png',
-              updatedAt: dayjs().subtract(41, 'minutes').subtract(3, 'hour').toDate(),
-            },
-            {
-              id: 'PRD-003',
-              name: 'Ritual of Sakura',
-              image: '/assets/product-3.png',
-              updatedAt: dayjs().subtract(5, 'minutes').subtract(3, 'hour').toDate(),
-            },
-            {
-              id: 'PRD-002',
-              name: 'Lancome Rouge',
-              image: '/assets/product-2.png',
-              updatedAt: dayjs().subtract(23, 'minutes').subtract(2, 'hour').toDate(),
-            },
-            {
-              id: 'PRD-001',
-              name: 'Erbology Aloe Vera',
-              image: '/assets/product-1.png',
-              updatedAt: dayjs().subtract(10, 'minutes').toDate(),
-            },
-          ]}
-          sx={{ height: '100%' }}
-        />
-      </Grid>
-      <Grid lg={8} md={12} xs={12}>
-        <LatestOrders
-          orders={[
-            {
-              id: 'ORD-007',
-              customer: { name: 'Ekaterina Tankova' },
-              amount: 30.5,
-              status: 'pending',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
-            },
-            {
-              id: 'ORD-006',
-              customer: { name: 'Cao Yu' },
-              amount: 25.1,
-              status: 'delivered',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
-            },
-            {
-              id: 'ORD-004',
-              customer: { name: 'Alexa Richardson' },
-              amount: 10.99,
-              status: 'refunded',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
-            },
-            {
-              id: 'ORD-003',
-              customer: { name: 'Anje Keizer' },
-              amount: 96.43,
-              status: 'pending',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
-            },
-            {
-              id: 'ORD-002',
-              customer: { name: 'Clarke Gillebert' },
-              amount: 32.54,
-              status: 'delivered',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
-            },
-            {
-              id: 'ORD-001',
-              customer: { name: 'Adam Denisov' },
-              amount: 16.76,
-              status: 'delivered',
-              createdAt: dayjs().subtract(10, 'minutes').toDate(),
-            },
-          ]}
-          sx={{ height: '100%' }}
-        />
-      </Grid>
-    </Grid>
+      <ProductForm
+        open={open}
+        onClose={() => setOpen(false)}
+        onSave={(newData?:any) => {
+          setData([...data, newData]);
+          setOpen(false);
+        }}
+        product={product}
+        setProduct={setProduct}
+      />
+    </div>
   );
 }

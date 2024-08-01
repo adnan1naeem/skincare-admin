@@ -17,9 +17,8 @@ import { Eye as EyeIcon } from '@phosphor-icons/react/dist/ssr/Eye';
 import { EyeSlash as EyeSlashIcon } from '@phosphor-icons/react/dist/ssr/EyeSlash';
 import { Controller, useForm } from 'react-hook-form';
 import { z as zod } from 'zod';
-
+import { postRequest } from './../ApiHandler';
 import { paths } from '@/paths';
-import { authClient } from '@/lib/auth/client';
 import { useUser } from '@/hooks/use-user';
 
 const schema = zod.object({
@@ -29,15 +28,12 @@ const schema = zod.object({
 
 type Values = zod.infer<typeof schema>;
 
-const defaultValues = { email: 'sofia@devias.io', password: 'Secret1' } satisfies Values;
+const defaultValues = { email: '', password: '' } satisfies Values;
 
 export function SignInForm(): React.JSX.Element {
   const router = useRouter();
-
   const { checkSession } = useUser();
-
-  const [showPassword, setShowPassword] = React.useState<boolean>();
-
+  const [showPassword, setShowPassword] = React.useState<boolean>(false);
   const [isPending, setIsPending] = React.useState<boolean>(false);
 
   const {
@@ -49,22 +45,22 @@ export function SignInForm(): React.JSX.Element {
 
   const onSubmit = React.useCallback(
     async (values: Values): Promise<void> => {
-      setIsPending(true);
+      try {
+        setIsPending(true);
+        const data = await postRequest('api/admin/login', values);
+        if (data && data.token) {
+          localStorage.setItem('custom-auth-token', data.token);
+          checkSession();
 
-      const { error } = await authClient.signInWithPassword(values);
-
-      if (error) {
-        setError('root', { type: 'server', message: error });
+          router.push(paths.home);
+        } else {
+          throw new Error('Login failed. Please try again.');
+        }
+      } catch (error) {
+        setError('root', { message: error.message });
+      } finally {
         setIsPending(false);
-        return;
       }
-
-      // Refresh the auth state
-      await checkSession?.();
-
-      // UserProvider, for this case, will not refresh the router
-      // After refresh, GuestGuard will handle the redirect
-      router.refresh();
     },
     [checkSession, router, setError]
   );
@@ -73,12 +69,12 @@ export function SignInForm(): React.JSX.Element {
     <Stack spacing={4}>
       <Stack spacing={1}>
         <Typography variant="h4">Sign in</Typography>
-        <Typography color="text.secondary" variant="body2">
+        {/* <Typography color="text.secondary" variant="body2">
           Don&apos;t have an account?{' '}
           <Link component={RouterLink} href={paths.auth.signUp} underline="hover" variant="subtitle2">
             Sign up
           </Link>
-        </Typography>
+        </Typography> */}
       </Stack>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack spacing={2}>
@@ -127,13 +123,13 @@ export function SignInForm(): React.JSX.Element {
               </FormControl>
             )}
           />
-          <div>
+          {/* <div>
             <Link component={RouterLink} href={paths.auth.resetPassword} variant="subtitle2">
               Forgot password?
             </Link>
-          </div>
-          {errors.root ? <Alert color="error">{errors.root.message}</Alert> : null}
-          <Button disabled={isPending} type="submit" variant="contained">
+          </div> */}
+          {errors.root && <Alert color="error">{errors.root.message}</Alert>}
+          <Button disabled={isPending} type="submit" variant="contained" style={{backgroundColor:"#008080",height:50}}>
             Sign in
           </Button>
         </Stack>
@@ -141,11 +137,11 @@ export function SignInForm(): React.JSX.Element {
       <Alert color="warning">
         Use{' '}
         <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
-          sofia@devias.io
+          Welcome to the
         </Typography>{' '}
-        with password{' '}
+        EstheMate{' '}
         <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
-          Secret1
+          Admin Portal
         </Typography>
       </Alert>
     </Stack>
