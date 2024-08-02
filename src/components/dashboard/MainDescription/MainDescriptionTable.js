@@ -56,14 +56,19 @@ export const MainDescriptionTable = ({ data, refreshData }) => {
       editable={{
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
-            updateDescription(newData)
-              .then(() => {
-                resolve();
-                refreshData();
-              })
-              .catch(error => {
-                reject(error);
-              });
+            if (!newData.description || newData.description.trim() === '') {
+              alert("Description should not be empty")
+              reject(new Error('Description should not be empty'));
+            } else {
+              updateDescription(newData)
+                .then(() => {
+                  resolve();
+                  refreshData();
+                })
+                .catch(error => {
+                  reject(error);
+                });
+            }
           }),
       }}
     />

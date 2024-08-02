@@ -36,7 +36,6 @@ export const SkinAnalysisDescriptionTable = ({ data, refreshData }) => {
           render: rowData => (
             <div style={{ maxHeight: 100, overflow: 'auto' }}>{rowData.description}</div>
           ),
-          
           editComponent: props => (
             <Input
               value={props.value}
@@ -50,7 +49,7 @@ export const SkinAnalysisDescriptionTable = ({ data, refreshData }) => {
           title: "Description",
           field: "detail",
           render: rowData => (
-            <div style={{ maxHeight: 100, overflow: 'auto',width:300 }}>{rowData.detail}</div>
+            <div style={{ maxHeight: 100, overflow: 'auto', width: 300 }}>{rowData.detail}</div>
           ),
           editComponent: props => (
             <Input
@@ -71,14 +70,22 @@ export const SkinAnalysisDescriptionTable = ({ data, refreshData }) => {
       editable={{
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
-            updateDescription(newData)
-              .then(() => {
-                resolve();
-                refreshData();
-              })
-              .catch(error => {
-                reject(error);
-              });
+            if (!newData.description || newData.description.trim() === '') {
+              alert("Sub Title should not be empty")
+              reject(new Error('Sub Title should not be empty'));
+            } else if (!newData.detail || newData.detail.trim() === '') {
+              alert("Description should not be empty")
+              reject(new Error('Description should not be empty'));
+            } else {
+              updateDescription(newData)
+                .then(() => {
+                  resolve();
+                  refreshData();
+                })
+                .catch(error => {
+                  reject(error);
+                });
+            }
           }),
       }}
     />

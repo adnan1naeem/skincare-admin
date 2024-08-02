@@ -1,4 +1,4 @@
-const getBaseUrl = () => '//152.42.225.202'; // Replace with your actual base URL
+const getBaseUrl = () => 'http://152.42.225.202'; // Replace with your actual base URL
 
 let token;
 if (typeof window !== 'undefined') {

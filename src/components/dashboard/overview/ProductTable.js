@@ -5,7 +5,7 @@ import { tableIcons } from './IconsData';
 import './ProductTable.css'; // Import the CSS file for custom styles
 import { putRequest } from '@/components/ApiHandler';
 
-export const ProductTable = ({ data, handleRowDelete }) => {
+export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
   const enumValues = ["Hydration", "Oilness", "Elasticity", "SkinAge"];
 
   const updateProduct = async (updatedData) => {
@@ -46,7 +46,7 @@ export const ProductTable = ({ data, handleRowDelete }) => {
           ),
           editComponent: props => (
             <TextField
-              style={{width:200}}
+              style={{ width: 200 }}
               value={props.value || ''}
               onChange={e => props.onChange(e.target.value)}
               label="Image URL"
@@ -146,16 +146,16 @@ export const ProductTable = ({ data, handleRowDelete }) => {
       ]}
       data={data}
       icons={tableIcons}
+      options={{
+        pageSize: 5,
+        pageSizeOptions: [5, 10, 15].filter(size => size <= data.length),
+        emptyRowsWhenPaging: false,
+      }}
       editable={{
         onRowUpdate: (newData, oldData) =>
           new Promise((resolve, reject) => {
-            updateProduct(newData)
-              .then(() => {
-                resolve();
-              })
-              .catch(error => {
-                reject(error);
-              });
+            handleRowUpdate(newData, oldData, resolve)
+              .catch(reject);
           }),
         onRowDelete: (oldData) =>
           new Promise((resolve) => {
