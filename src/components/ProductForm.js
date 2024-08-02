@@ -55,6 +55,21 @@ export default function ProductForm({ open, onClose, onSave, product,setProduct 
             try {
                 const result = await postRequestToken('api/admin/products', productData);
                 console.log('Product saved:', result);
+                setProductData({ // Resetting the product data to default values
+                    title: '',
+                    description: '',
+                    price: '',
+                    discountPrice: '',
+                    productImage: '',
+                    amazonUrl: '',
+                    detail: '',
+                    hydration: '',
+                    oil: '',
+                    elasticity: '',
+                    availableAmount: 1,
+                    featureImages: [],
+                });
+                setSelectedEnums([]); 
                 onSave(result);
                 onClose();
             } catch (error) {

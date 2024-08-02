@@ -64,6 +64,15 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
             </div>
           ),
         },
+        {
+          title: "Detail",
+          field: "detail",
+          render: rowData => (
+            <div className="detail-cell" style={{ maxHeight: 100, overflow: 'auto', width: 300 }}>
+              {rowData.detail}
+            </div>
+          ),
+        },
         { title: "Price", field: "price" },
         { title: "Discount Price", field: "discountPrice" },
         {
