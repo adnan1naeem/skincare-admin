@@ -18,6 +18,7 @@ export default function Layout({ children }: LayoutProps): React.JSX.Element {
   return (
     <html lang="en">
       <Head>
+        <link rel="icon" href='./../../public/favicon.ico' sizes="any" />
         <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
       </Head>
       <body>
