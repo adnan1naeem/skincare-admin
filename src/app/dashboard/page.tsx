@@ -11,7 +11,7 @@ import { deleteRequestToken, getRequest, putRequest } from '@/components/ApiHand
 export default function Page(): React.JSX.Element {
   const [data, setData] = useState<any>([]); // table data
   const [isError, setIsError] = useState(false);
-  const [errorMessages, setErrorMessages] = useState(false);
+  const [errorMessages, setErrorMessages] = useState("");
   const [open, setOpen] = useState(false); // State for controlling the form modal
   const [product, setProduct] = useState(null); // State to store product data
 
@@ -73,7 +73,7 @@ export default function Page(): React.JSX.Element {
       <ProductForm
         open={open}
         onClose={() => setOpen(false)}
-        onSave={(newData) => {
+        onSave={(newData:any) => {
           setData([...data, newData]);
           setOpen(false);
         }}
