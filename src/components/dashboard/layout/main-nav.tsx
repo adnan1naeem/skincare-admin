@@ -11,7 +11,6 @@ import { usePopover } from '@/hooks/use-popover';
 
 import { MobileNav } from './mobile-nav';
 import { UserPopover } from './user-popover';
-import { Button } from '@mui/material';
 
 export function MainNav(): React.JSX.Element {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
@@ -37,14 +36,14 @@ export function MainNav(): React.JSX.Element {
           sx={{ alignItems: 'center', justifyContent: 'space-between', minHeight: '64px', px: 2 }}
         >
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
-            <Button
+            <IconButton
               onClick={(): void => {
                 setOpenNav(true);
               }}
-              sx={{ display: {xs: 'block',md:"block", lg: 'none',xl:"none" },backgroundColor:{lg:"red",xl:"yellow",md:"blue"} }}
+              sx={{ display: { lg: 'none' } }}
             >
-              <ListIcon />
-            </Button>
+              {/* <ListIcon /> */}
+            </IconButton>
           </Stack>
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
             <Avatar
