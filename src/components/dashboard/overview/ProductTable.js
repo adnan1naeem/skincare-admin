@@ -3,26 +3,9 @@ import MaterialTable from "material-table";
 import { Select, MenuItem, Chip, Input, TextField } from '@material-ui/core';
 import { tableIcons } from './IconsData';
 import './ProductTable.css'; // Import the CSS file for custom styles
-import { putRequest } from '@/components/ApiHandler';
 
 export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
   const enumValues = ["Hydration", "Oilness", "Elasticity", "SkinAge"];
-
-  const updateProduct = async (updatedData) => {
-    try {
-      const response = await putRequest(`api/admin/products/update/${updatedData?._id}`, updatedData);
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
-      }
-
-      const data = await response.json();
-      console.log('Product updated successfully:', data);
-      return data;
-    } catch (error) {
-      console.error('Failed to update product:', error);
-    }
-  };
 
   return (
     <MaterialTable
