@@ -45,7 +45,7 @@ export function MainNav(): React.JSX.Element {
               onClick={(): void => {
                 setOpenNav(true);
               }}
-              sx={{ display: { lg: 'none' } }}
+              sx={{ display: { xs: 'block', lg: 'none',xl:"none" } }}
             >
               <ListIcon />
             </IconButton>
