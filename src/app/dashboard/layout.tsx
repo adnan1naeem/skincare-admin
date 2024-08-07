@@ -1,6 +1,5 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
 import GlobalStyles from '@mui/material/GlobalStyles';
 
 import { AuthGuard } from '@/components/auth/auth-guard';
@@ -36,12 +35,20 @@ export default function Layout({ children }: LayoutProps): React.JSX.Element {
         }}
       >
         <SideNav />
-        <Box sx={{ display: 'flex', flex: '1 1 auto', flexDirection: 'column', pl: { lg: 'var(--SideNav-width)' } }}>
+        <Box
+          sx={{
+            display: 'flex',
+            flex: '1 1 auto',
+            flexDirection: 'column',
+            pl: { lg: 'var(--SideNav-width)' },
+            width: '100%',
+          }}
+        >
           <MainNav />
-          <main>
-            <Container maxWidth="xl" sx={{ py: '64px' }}>
+          <main >
+            <Box sx={{ width: '100%',py: '64px', }} >
               {children}
-            </Container>
+            </Box>
           </main>
         </Box>
       </Box>

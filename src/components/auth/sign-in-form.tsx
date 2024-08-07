@@ -84,7 +84,7 @@ export function SignInForm(): React.JSX.Element {
             render={({ field }) => (
               <FormControl error={Boolean(errors.email)}>
                 <InputLabel>Email address</InputLabel>
-                <OutlinedInput {...field} label="Email address" type="email" />
+                <OutlinedInput {...field} label="Email address" type="email" sx={{minWidth:350}}/>
                 {errors.email ? <FormHelperText>{errors.email.message}</FormHelperText> : null}
               </FormControl>
             )}
@@ -97,6 +97,7 @@ export function SignInForm(): React.JSX.Element {
                 <InputLabel>Password</InputLabel>
                 <OutlinedInput
                   {...field}
+                  sx={{minWidth:350}}
                   endAdornment={
                     showPassword ? (
                       <EyeIcon
@@ -134,16 +135,6 @@ export function SignInForm(): React.JSX.Element {
           </Button>
         </Stack>
       </form>
-      <Alert color="warning">
-        Use{' '}
-        <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
-          Welcome to the
-        </Typography>{' '}
-        EstheMate{' '}
-        <Typography component="span" sx={{ fontWeight: 700 }} variant="inherit">
-          Admin Portal
-        </Typography>
-      </Alert>
     </Stack>
   );
 }
