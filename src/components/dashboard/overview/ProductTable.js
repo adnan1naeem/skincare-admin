@@ -23,7 +23,7 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
                   : rowData.productImage
                 : " "
               }
-              alt={rowData ? rowData.productImage : "Image"}
+              alt={rowData ? "Image" : "Image"}
               style={{ width: 30, height: 40, borderRadius: '10%' }}
             />
           ),
@@ -42,9 +42,18 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
           title: "Description",
           field: "description",
           render: rowData => (
-            <div className="description-cell">
+            <div className="detail-cell" style={{maxHeight: 100,overflow: 'auto',width: 300 }}>
               {rowData.description}
             </div>
+          ),
+          editComponent: props => (
+            <TextField
+              value={props.value || ''}
+              onChange={e => props.onChange(e.target.value)}
+              multiline
+              rows={4}
+              fullWidth
+            />
           ),
         },
         {
@@ -54,6 +63,15 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
             <div className="detail-cell" style={{ maxHeight: 100, overflow: 'auto', width: 300 }}>
               {rowData.detail}
             </div>
+          ),
+          editComponent: props => (
+            <TextField
+              value={props.value || ''}
+              onChange={e => props.onChange(e.target.value)}
+              multiline
+              rows={4}
+              fullWidth
+            />
           ),
         },
         { title: "Price", field: "price" },
