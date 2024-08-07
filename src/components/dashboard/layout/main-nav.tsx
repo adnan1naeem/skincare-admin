@@ -2,20 +2,16 @@
 
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
-import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
-import { Bell as BellIcon } from '@phosphor-icons/react/dist/ssr/Bell';
 import { List as ListIcon } from '@phosphor-icons/react/dist/ssr/List';
-import { MagnifyingGlass as MagnifyingGlassIcon } from '@phosphor-icons/react/dist/ssr/MagnifyingGlass';
-import { Users as UsersIcon } from '@phosphor-icons/react/dist/ssr/Users';
 
 import { usePopover } from '@/hooks/use-popover';
 
 import { MobileNav } from './mobile-nav';
 import { UserPopover } from './user-popover';
+import { Button } from '@mui/material';
 
 export function MainNav(): React.JSX.Element {
   const [openNav, setOpenNav] = React.useState<boolean>(false);
@@ -41,14 +37,14 @@ export function MainNav(): React.JSX.Element {
           sx={{ alignItems: 'center', justifyContent: 'space-between', minHeight: '64px', px: 2 }}
         >
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
-            <IconButton
+            <Button
               onClick={(): void => {
                 setOpenNav(true);
               }}
-              sx={{ display: { xs: 'block', lg: 'none',xl:"none" } }}
+              sx={{ display: {xs: 'block',md:"block", lg: 'none',xl:"none" },backgroundColor:{lg:"red",xl:"yellow",md:"blue"} }}
             >
               <ListIcon />
-            </IconButton>
+            </Button>
           </Stack>
           <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2}>
             <Avatar
