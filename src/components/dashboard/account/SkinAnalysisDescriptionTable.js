@@ -28,7 +28,12 @@ export const SkinAnalysisDescriptionTable = ({ data, refreshData }) => {
       title="My Skin Analysis"
       columns={[
         { title: "ID", field: "_id", hidden: true },
-        { title: "Parameter", field: "parameter", editable: 'never' },
+        {
+          title: "Parameter",
+          field: "parameter",
+          editable: 'never',
+          render: rowData => rowData.parameter === 'oilness' ? 'oiliness' : rowData.parameter,
+        },
         { title: "Level", field: "level", editable: 'never' },
         {
           title: "Sub Title",

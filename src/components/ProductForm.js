@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Select, MenuItem, Input, Chip, Grid, Typography } from '@material-ui/core';
 import { postRequestToken } from '../components/ApiHandler'; // Adjust the import based on your file structure
 
-const enumValues = ["Hydration", "Oilness", "Elasticity", "SkinAge"];
+const enumValues = ["Hydration", "Oiliness", "Elasticity", "SkinAge"];
 
 export default function ProductForm({ open, onClose, onSave, product,setProduct }) {
     const [productData, setProductData] = useState({

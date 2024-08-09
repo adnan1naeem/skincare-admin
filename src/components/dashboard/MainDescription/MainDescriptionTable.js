@@ -28,7 +28,7 @@ export const MainDescriptionTable = ({ data, refreshData }) => {
       title="Skin Overview Descriptions"
       columns={[
         { title: "ID", field: "_id", hidden: true },
-        { title: "Oilness", field: "oilness", editable: 'never' },
+        { title: "Oiliness", field: "oilness", editable: 'never' },
         { title: "Elasticity", field: "elasticity", editable: 'never' },
         { title: "Hydration", field: "hydration", editable: 'never' },
         {

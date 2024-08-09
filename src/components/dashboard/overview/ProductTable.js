@@ -5,7 +5,7 @@ import { tableIcons } from './IconsData';
 import './ProductTable.css'; // Import the CSS file for custom styles
 
 export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
-  const enumValues = ["Hydration", "Oilness", "Elasticity", "SkinAge"];
+  const enumValues = ["Hydration", "Oiliness", "Elasticity", "SkinAge"];
 
   return (
     <MaterialTable
@@ -33,6 +33,29 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
               value={props.value || ''}
               onChange={e => props.onChange(e.target.value)}
               label="Image URL"
+              fullWidth
+            />
+          ),
+        },
+        {
+          title: "Amazon URL",
+          field: "amazonUrl",
+          render: rowData => (
+            <a href={rowData.amazonUrl} target="_blank" rel="noopener noreferrer"  style={{
+              maxWidth: 150,
+              display: "inline-block",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap"
+            }}>
+              {rowData.amazonUrl}
+            </a>
+          ),
+          editComponent: props => (
+            <TextField
+              value={props.value || ''}
+              onChange={e => props.onChange(e.target.value)}
+              label="amazonUrl"
               fullWidth
             />
           ),
@@ -74,8 +97,33 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
             />
           ),
         },
-        { title: "Price", field: "price" },
-        { title: "Discount Price", field: "discountPrice" },
+        { 
+          title: "Price", 
+          field: "price",
+          render: rowData => parseFloat(rowData.price).toFixed(2),
+          editComponent: props => (
+            <TextField
+              value={props.value || ''}
+              onChange={e => props.onChange(e.target.value)}
+              type="number"
+              inputProps={{ step: "0.01" }}
+              fullWidth
+            />
+          ),
+        },
+        { 
+         title: "Discount Price", field: "discountPrice",
+          render: rowData => parseFloat(rowData.discountPrice).toFixed(2),
+          editComponent: props => (
+            <TextField
+              value={props.value || ''}
+              onChange={e => props.onChange(e.target.value)}
+              type="number"
+              inputProps={{ step: "0.01" }}
+              fullWidth
+            />
+          ),
+        },
         {
           title: "Hydration",
           field: "hydration",
