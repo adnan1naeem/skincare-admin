@@ -169,7 +169,7 @@ export default function ProductForm({ open, onClose, onSave, product,setProduct 
                             input={<Input />}
                             error={!!errors.hydration}
                         >
-                            {["low", "medium", "high"].map(option => (
+                            {["any","low", "medium", "high"].map(option => (
                                 <MenuItem key={option} value={option}>{option}</MenuItem>
                             ))}
                         </Select>
@@ -186,7 +186,7 @@ export default function ProductForm({ open, onClose, onSave, product,setProduct 
                             input={<Input />}
                             error={!!errors.oil}
                         >
-                            {["low", "medium", "high"].map(option => (
+                            {["any","low", "medium", "high"].map(option => (
                                 <MenuItem key={option} value={option}>{option}</MenuItem>
                             ))}
                         </Select>
@@ -203,7 +203,7 @@ export default function ProductForm({ open, onClose, onSave, product,setProduct 
                             input={<Input />}
                             error={!!errors.elasticity}
                         >
-                            {["low", "medium", "high"].map(option => (
+                            {["any","low", "medium", "high"].map(option => (
                                 <MenuItem key={option} value={option}>{option}</MenuItem>
                             ))}
                         </Select>

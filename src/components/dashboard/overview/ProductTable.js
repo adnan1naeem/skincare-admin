@@ -133,7 +133,7 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
               onChange={e => props.onChange(e.target.value)}
               input={<Input />}
             >
-              {["low", "medium", "high"].map(option => (
+              {["any","low", "medium", "high"].map(option => (
                 <MenuItem key={option} value={option}>{option}</MenuItem>
               ))}
             </Select>
@@ -148,7 +148,7 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
               onChange={e => props.onChange(e.target.value)}
               input={<Input />}
             >
-              {["low", "medium", "high"].map(option => (
+              {["any","low", "medium", "high"].map(option => (
                 <MenuItem key={option} value={option}>{option}</MenuItem>
               ))}
             </Select>
@@ -163,7 +163,7 @@ export const ProductTable = ({ data, handleRowDelete, handleRowUpdate }) => {
               onChange={e => props.onChange(e.target.value)}
               input={<Input />}
             >
-              {["low", "medium", "high"].map(option => (
+              {["any","low", "medium", "high"].map(option => (
                 <MenuItem key={option} value={option}>{option}</MenuItem>
               ))}
             </Select>
