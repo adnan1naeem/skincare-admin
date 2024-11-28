@@ -1,4 +1,4 @@
-const getBaseUrl = () => 'https://esthemate.com'; // Replace with your actual base URL
+const getBaseUrl = () => 'https://backend.esthemate.com'; // Replace with your actual base URL
 
 let token;
 if (typeof window !== 'undefined') {
